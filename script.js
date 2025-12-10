@@ -1,48 +1,36 @@
-// Encryption process
-function encryptMsg() {
-    const message = document.getElementById('message').value;
-    const key = parseInt(document.getElementById('key').value);
-    if (!key || key < 1 || key > 25) {
-        alert("Please enter a key between 1 and 25.");
-        return;
-    }
-
-    let result = "";
-    for (let i = 0; i < message.length; i++) {
-        let char = message[i];
+function caesarCipher(str, key) {
+    let result = '';
+    for (let i = 0; i < str.length; i++) {
+        let char = str[i];
         if (char.match(/[a-z]/i)) {
-            const code = message.charCodeAt(i);
-            let base = code >= 65 && code <= 90 ? 65 : 97;
-            char = String.fromCharCode(((code - base + key) % 26) + base);
+            let code = str.charCodeAt(i);
+            let offset = char === char.toLowerCase() ? 97 : 65;
+            result += String.fromCharCode(((code - offset + key) % 26 + 26) % 26 + offset);
+        } else {
+            result += char;
         }
-        result += char;
     }
-
-    document.getElementById('result').value = result;
+    return result;
 }
 
-// Decryption process
+function encryptMessage() {
+    const message = document.getElementById("message").value;
+    const key = parseInt(document.getElementById("key").value) || 0;
+    if (key >= 1 && key <= 25) {
+        const encryptedMessage = caesarCipher(message, key);
+        document.getElementById("result").textContent = encryptedMessage;
+    } else {
+        alert("Please enter a valid key (1-25).");
+    }
+}
+
 function decryptMessage() {
-    const message = document.getElementById('result').value;
-    const key = parseInt(document.getElementById('key').value);
-    if (!key || key < 1 || key > 25) {
-        alert("Please enter a key between 1 and 25.");
-        return;
+    const message = document.getElementById("message").value;
+    const key = parseInt(document.getElementById("key").value) || 0;
+    if (key >= 1 && key <= 25) {
+        const decryptedMessage = caesarCipher(message, -key);
+        document.getElementById("result").textContent = decryptedMessage;
+    } else {
+        alert("Please enter a valid key (1-25).");
     }
-
-    let result = "";
-    for (let i = 0; i < message.length; i++) {
-        let char = message[i];
-        if (char.match(/[a-z]/i)) {
-            const code = message.charCodeAt(i);
-            let base = code >= 65 && code <= 90 ? 65 : 97;
-            char = String.fromCharCode(((code - base - key + 26) % 26) + base);
-        }
-        result += char;
-    }
-
-    document.getElementById('result').value = result;
-}
-
-document.getElementById('encryptBtn').addEventListener('click', encryptMessage);
-document.getElementById('decryptBtn').addEventListener('click', decryptMessage);
+            }
