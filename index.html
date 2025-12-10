@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Message Encryptor</title>
-    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -16,13 +15,11 @@
         <label for="key">Enter key (1-25):</label>
         <input type="number" id="key" min="1" max="25">
 
-        <button id="encryptBtn">Encrypt</button>
-        <button id="decryptBtn">Decrypt</button><br><br>
+        <button onclick="encryptMessage()">Encrypt</button>
+        <button onclick="decryptMessage()">Decrypt</button><br><br>
 
         <label for="result">Result:</label>
         <textarea id="result" readonly></textarea>
     </div>
-
-    <script src="script.js"></script>
 </body>
 </html>
